@@ -6,7 +6,7 @@ import torchvision.transforms as transforms
 from PIL import Image
 import io
 import numpy as np
-
+from lung_cancer_convolutional_network import convolutional_neural_network
 # 1. Define the LungCancerClassifierFineTuned model architecture
 # This class is identical to the one used for retraining
 class LungCancerClassifierFineTuned(nn.Module):
