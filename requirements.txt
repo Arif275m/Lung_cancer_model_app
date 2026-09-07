@@ -1,4 +1,5 @@
- streamlit
-tensorflow
-numpy
-pillow
+streamlit
+torch 
+torchvision 
+Pillow
+ numpy
