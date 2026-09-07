@@ -1,5 +1,5 @@
 
-import streamlit as st
+ import streamlit as st
 import torch
 import torch.nn as nn
 import torchvision.models as models
@@ -9,7 +9,6 @@ import io
 import numpy as np
 
 # 1. Define the LungCancerClassifierFineTuned model architecture
-# This class is identical to the one used for retraining
 class LungCancerClassifierFineTuned(nn.Module):
     def __init__(self, num_classes=3):
         super(LungCancerClassifierFineTuned, self).__init__()
@@ -28,7 +27,6 @@ val_test_transform = transforms.Compose([
 ])
 
 # 3. Define the label mapping
-# This should match the label_map used during training
 label_map = {'Normal': 0, 'Benign': 1, 'Malignant': 2}
 inverse_label_map = {v: k for k, v in label_map.items()}
 class_names = [inverse_label_map[i] for i in sorted(inverse_label_map.keys())]
@@ -49,7 +47,6 @@ def load_model(model_path='lung_cancer_classifier.pth', num_classes=3, device='c
 
 # 5. Prediction function
 def predict_image(image_input, model, transform, device='cpu'):
-    # image_input can be bytes data (from Streamlit UploadedFile)
     image = Image.open(io.BytesIO(image_input)).convert('RGB')
 
     image_tensor = transform(image).unsqueeze(0) # Add batch dimension
@@ -83,7 +80,6 @@ if uploaded_file is not None:
          st.image(uploaded_file, caption='Uploaded Image', use_container_width=True)
 
     # Load the model
-    # Use 'cpu' as map_location because Streamlit Cloud generally doesn't have GPUs
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = load_model(num_classes=len(class_names), device=device)
 
@@ -93,7 +89,7 @@ if uploaded_file is not None:
     with col2:
         st.subheader("Prediction Results")
         st.write(f"**Predicted Class:** <span style='font-size:24px; color:red;'>{predicted_label}</span>", unsafe_allow_html=True)
-        st.write(f"**Confidence:** {predicted_probability*100:.2f}% Barton")
+        st.write(f"**Confidence:** {predicted_probability*100:.2f}%")
 
         st.subheader("All Class Probabilities:")
         for i, class_name in enumerate(class_names):
@@ -102,4 +98,4 @@ if uploaded_file is not None:
 else:
     st.info("Please upload an image file to get started.")
 
-st.markdown("--- Developed by Shreas Shivam for Colab DSA Project --- ")
+st.markdown("--- Developed for Lung Cancer Detection Project ---")
