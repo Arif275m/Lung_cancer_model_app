@@ -80,7 +80,7 @@ if uploaded_file is not None:
     # Display the uploaded image
     col1, col2 = st.columns(2)
     with col1:
-        st.image(uploaded_file, caption='Uploaded Image', use_column_width=True)
+         st.image(uploaded_file, caption='Uploaded Image', use_container_width=True)
 
     # Load the model
     # Use 'cpu' as map_location because Streamlit Cloud generally doesn't have GPUs
